@@ -145,7 +145,7 @@ cwr(
 
 # STEP 4: BASIS AND ORTHOGONAL BASIS FORMATION
 section("STEP 4: BASIS AND ORTHOGONAL BASIS FORMATION")
-R_full, basis_indices = rref(A_centered)
+R_full, basis_indices = rref(A_centered.T)
 B = A_centered[:, basis_indices]
 Q, _ = np.linalg.qr(B)
 Q = Q[:, : B.shape[1]]
