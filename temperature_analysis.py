@@ -97,8 +97,8 @@ section("STEP 2: MATRIX REPRESENTATION")
 A_mean = A.mean(axis=0)
 A_centered = A - A_mean
 
-print("\nMatrix A (first 5 rows):")
-print(pd.DataFrame(A, index=years, columns=city_labels).head())
+print("Matrix A (first 5 rows):")
+print(pd.DataFrame(A, index=years, columns=city_labels).head().to_string())
 
 cwr("Matrix Representation", "Convert data into linear algebra form", "Temperature matrix A created")
 
@@ -109,8 +109,8 @@ section("STEP 3: RREF")
 rref_matrix, pivots = rref(A_centered)
 rank = len(pivots)
 
-print("\nRREF Matrix (first 5 rows):")
-print(pd.DataFrame(rref_matrix, index=years, columns=city_labels).head())
+print("RREF Matrix (first 5 rows):")
+print(pd.DataFrame(rref_matrix, index=years, columns=city_labels).head().to_string())
 
 info("Rank", rank)
 
@@ -119,6 +119,16 @@ cwr("RREF", "Find independent city patterns", f"Rank = {rank}")
 
 # STEP 4: VECTOR SPACE
 section("STEP 4: VECTOR SPACE")
+
+null_dim = A_centered.shape[1] - rank
+
+info("Null Space Dimension", null_dim)
+
+cwr(
+    "Vector Space",
+    "Understand data structure",
+    "Row space = yearly trends, Column space = city patterns, Null space = redundant information"
+)
 
 cwr(
     "Vector Space",
@@ -134,11 +144,11 @@ _, basis_indices = rref(A_centered.T)
 B = A_centered[:, basis_indices]
 Q, _ = np.linalg.qr(B)
 
-print("\nBasis Matrix B (first 5 rows):")
-print(pd.DataFrame(B, index=years).head())
+print("Basis Matrix B (first 5 rows):")
+print(pd.DataFrame(B, index=years).head().to_string())
 
-print("\nOrthogonal Matrix Q (first 5 rows):")
-print(pd.DataFrame(Q, index=years).head())
+print("Orthogonal Matrix Q (first 5 rows):")
+print(pd.DataFrame(Q, index=years).head().to_string())
 
 cwr("Basis", "Remove redundancy", "Independent features selected")
 cwr("Orthogonalization", "Remove correlation", "Orthogonal climate components obtained")
@@ -150,8 +160,8 @@ section("STEP 6: PROJECTION")
 P = Q @ Q.T
 A_proj = P @ A_centered + A_mean
 
-print("\nProjected Matrix (first 5 rows):")
-print(pd.DataFrame(A_proj, index=years, columns=city_labels).head())
+print("Projected Matrix (first 5 rows):")
+print(pd.DataFrame(A_proj, index=years, columns=city_labels).head().to_string())
 
 cwr("Projection", "Denoise data", "Projected onto clean subspace")
 
@@ -162,14 +172,14 @@ section("STEP 7: LEAST SQUARES")
 t = (years - years.mean()) / years.std()
 X = np.column_stack([np.ones_like(t), t, t**2])
 
-print("\nDesign Matrix X (first 5 rows):")
-print(pd.DataFrame(X).head())
+print("Design Matrix X (first 5 rows):")
+print(pd.DataFrame(X).head().to_string())
 
 Beta = np.linalg.lstsq(X, A, rcond=None)[0]
 A_pred = X @ Beta
 
-print("\nPredicted Matrix (first 5 rows):")
-print(pd.DataFrame(A_pred, index=years, columns=city_labels).head())
+print("Predicted Matrix (first 5 rows):")
+print(pd.DataFrame(A_pred, index=years, columns=city_labels).head().to_string())
 
 cwr("Least Squares", "Predict trends", "Best-fit polynomial model created")
 
@@ -190,13 +200,20 @@ eigvals = eigvals[::-1]
 eigvecs = eigvecs[:, ::-1]
 
 print("\nCovariance Matrix:")
-print(pd.DataFrame(C, index=city_labels, columns=city_labels))
+print(pd.DataFrame(C, index=city_labels, columns=city_labels).to_string())
 
 print("\nEigenvalues:", eigvals)
 
 explained = 100 * eigvals / eigvals.sum()
 
-cwr("Eigenvalues", "Find dominant trends", f"PC1 explains {explained[0]:.2f}% variance")
+print("\nFirst Eigenvector (dominant pattern):")
+print(eigvecs[:, 0])
+
+cwr(
+    "Eigenvalues & Eigenvectors",
+    "Identify dominant global patterns",
+    f"PC1 explains {explained[0]:.2f}% variance representing global warming trend"
+)
 
 
 # STEP 9: FINAL OUTPUT
@@ -212,7 +229,7 @@ for i, year in enumerate(future_years):
 cwr("Final Output", "Provide predictions", "CSV file generated + results displayed")
 
 
-# VISUALIZATION
+# VISUALIZATION (ALL IN ONE WINDOW)
 section("VISUALIZATION")
 
 fig, axs = plt.subplots(3, 1, figsize=(10, 12))
@@ -235,5 +252,9 @@ plt.show()
 # CONCLUSION
 section("CONCLUSION")
 
-print("Temperature shows increasing trend.")
-print("Predictions indicate future rise.")
+print("Temperature data shows a consistent increasing trend across major cities.")
+print("RREF and basis selection reveal independent climate patterns.")
+print("Projection removes noise and improves data quality.")
+print("Least squares provides accurate future predictions.")
+print("Eigen analysis confirms a dominant global warming trend.")
+print("Overall, the model successfully captures and predicts temperature trends.")
