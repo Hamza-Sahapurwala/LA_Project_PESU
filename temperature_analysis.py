@@ -97,8 +97,8 @@ section("STEP 2: MATRIX REPRESENTATION")
 A_mean = A.mean(axis=0)
 A_centered = A - A_mean
 
-print("Matrix A (first 5 rows):")
-print(pd.DataFrame(A, index=years, columns=city_labels).head().to_string())
+print("Matrix A (first 6 rows):")
+print(pd.DataFrame(A, index=years, columns=city_labels).head(6).to_string())
 
 cwr("Matrix Representation", "Convert data into linear algebra form", "Temperature matrix A created")
 
@@ -109,8 +109,8 @@ section("STEP 3: RREF")
 rref_matrix, pivots = rref(A_centered)
 rank = len(pivots)
 
-print("RREF Matrix (first 5 rows):")
-print(pd.DataFrame(rref_matrix, index=years, columns=city_labels).head().to_string())
+print("RREF Matrix (first 6 rows):")
+print(pd.DataFrame(rref_matrix, index=years, columns=city_labels).head(6).to_string())
 
 info("Rank", rank)
 
@@ -130,13 +130,6 @@ cwr(
     "Row space = yearly trends, Column space = city patterns, Null space = redundant information"
 )
 
-cwr(
-    "Vector Space",
-    "Understand data structure",
-    "Row space = yearly trends, Column space = city patterns"
-)
-
-
 # STEP 5: BASIS + ORTHOGONALIZATION
 section("STEP 5: BASIS + ORTHOGONALIZATION")
 
@@ -145,7 +138,7 @@ B = A_centered[:, basis_indices]
 Q, _ = np.linalg.qr(B)
 
 print("Basis Matrix B (first 5 rows):")
-print(pd.DataFrame(B, index=years).head().to_string())
+print(pd.DataFrame(B, index=years).head().to_string(),"\n")
 
 print("Orthogonal Matrix Q (first 5 rows):")
 print(pd.DataFrame(Q, index=years).head().to_string())
