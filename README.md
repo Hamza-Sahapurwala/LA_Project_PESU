@@ -103,15 +103,15 @@ The script generates a single figure with four panels:
 3. **Projection Residual Norm by City** - how much "noise" got filtered out per city
 4. **PCA Scree Plot** - how much variance each principal component explains
 
-![All Cities Yearly Chart](Results\temperature_analysis_reference_results.png) <br><br>
+![All Cities Yearly Chart](Results/temperature_analysis_reference_results.png) <br><br>
 
-![Actual vs Predicted](SS\actualvspredicted.PNG) <br><br>
+![Actual vs Predicted](SS/actualvspredicted.PNG) <br><br>
 
-![1](SS\1.PNG) <br><br>
+![1](SS/1.PNG) <br><br>
 
-![2](SS\2.PNG) <br><br>
+![2](SS/2.PNG) <br><br>
 
-![3](SS\3.PNG) <br><br>
+![3](SS/3.PNG) <br><br>
 
 ---
 
@@ -138,7 +138,7 @@ matplotlib
 The terminal prints a step-by-step walkthrough of every linear algebra operation as it
 happens, followed by a pop-up window with the 4-panel chart described above.
 
-![Starting](SS\Start.png)
+![Starting](SS/Start.png)
 
 ---
 
