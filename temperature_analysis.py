@@ -254,11 +254,11 @@ annual_imputed = annual_full.copy()
 mask = annual_imputed.isna()
 annual_imputed = annual_imputed.where(~mask, A_all_model)
 
-pred_df.to_csv("temperature_future_predictions_2024_2040.csv", index_label="Year")
+pred_df.to_csv(r"Results\temperature_future_predictions_2024_2040.csv", index_label="Year")
 pd.DataFrame(A_proj, index=annual.index, columns=city_labels).to_csv(
-    "temperature_improved_denoised_dataset.csv", index_label="Year"
+    r"Results\temperature_improved_denoised_dataset.csv", index_label="Year"
 )
-annual_imputed.to_csv("temperature_improved_with_missing_estimated.csv", index_label="Year")
+annual_imputed.to_csv(r"Results\temperature_improved_with_missing_estimated.csv", index_label="Year")
 
 last_year = int(years[-1])
 last_val = A[-1, focus_idx]
@@ -321,7 +321,7 @@ fig.suptitle(
     fontweight="bold",
 )
 fig.tight_layout(rect=[0, 0.03, 1, 0.96])
-plt.savefig("temperature_analysis_reference_results.png", dpi=160)
+plt.savefig(r"Results\temperature_analysis_reference_results.png", dpi=160)
 print("Saved: temperature_analysis_reference_results.png")
 plt.show()
 
