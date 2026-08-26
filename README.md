@@ -102,7 +102,7 @@ The script generates a single figure with four panels:
 2. **Actual vs Predicted** - the focus city's real data, the model's fit, and its forecast
 3. **Projection Residual Norm by City** - how much "noise" got filtered out per city
 4. **PCA Scree Plot** - how much variance each principal component explains
-<br><br>
+
 ![All Cities Yearly Chart](Results\temperature_analysis_reference_results.png) <br><br>
 
 ![Actual vs Predicted](SS\actualvspredicted.PNG) <br><br>
